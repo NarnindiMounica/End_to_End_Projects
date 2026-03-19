@@ -84,7 +84,13 @@ if loaded_files is not None:
             store[id] = ChatMessageHistory()
         return store[id]
     
-    with_message_history = RunnableWithMessageHistory(retrieval_chain, get_session_state)
+    with_message_history = RunnableWithMessageHistory(retrieval_chain, get_session_state, history_messages_key="message_history")
+
+    user_in = st.text_input("How can I help you with uploaded docs?")
+    if user_in:
+        config = {"configurable": {"session_id": "user_1"}}
+        response = with_message_history.invoke({"input": user_in}, config=config)
+        st.success(response['answer'])
 
 
 
