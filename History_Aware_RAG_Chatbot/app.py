@@ -89,8 +89,11 @@ if loaded_files is not None:
     user_in = st.text_input("How can I help you with uploaded docs?")
     if user_in:
         config = {"configurable": {"session_id": "user_1"}}
+        session_history = get_session_state(config['configurable']['session_id'])
         response = with_message_history.invoke({"input": user_in}, config=config)
+        
         st.success(response['answer'])
+        st.write(session_history)
 
 
 
