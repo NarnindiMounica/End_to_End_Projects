@@ -21,28 +21,29 @@ tools = [arxiv, wikipedia, duck_search]
 groq_api_key = st.sidebar.text_input("Enter your model api keys", type="password")
 if groq_api_key:
     model = ChatGroq(groq_api_key=groq_api_key, model="llama-3.1-8b-instant")
-    st.sidebar.write("Model initialized successfully ✅")
+    st.sidebar.success("Model initialized successfully")
 
-    tools_agent = create_agent(model, 
-                               tools=tools,
-                               system_prompt="You are a answering tool, answer asked questions using only tools given")
+    tools_agent = create_agent(model=model, 
+                               tools=tools)
     
+    #initializing messages
     if "messages" not in st.session_state:
-        st.session_state.messages = [{"role":"assistant",
-                                      "content": "I am a text generating app, please enter a topic to get more info on it"}]
+        st.session_state['messages']=[{"role":"assistant", "content":"I'm a generating app, please enter your topic to present some info on it"}]
+        st.chat_message("assistant").write(st.session_state['messages'][0]['content'])
 
-        for msg in st.session_state.messages:
-            st.chat_message(msg['role']).write(msg['content'])
+    #appending user messages
+    user_in = st.chat_input(placeholder="what is gen ai")
+    if user_in:
+        st.session_state['messages'].append({"role":"user", "content":user_in}) 
+        response = tools_agent.invoke({"messages": st.session_state['messages'][-1] })
+        st.session_state['messages'].append({"role":"assistant", "content":response['messages'][-1].content}) 
 
-            if user_in:= st.chat_input(placeholder="what is agentic ai?"):
-                st.session_state.messages.append({"role":"user", "content":user_in})
-                st.chat_message("user").write(user_in)
+    #to display
+    for msg in st.session_state['messages'][1:]:
+        if msg['role']=="assistant":
+            st.chat_message("assistant").write(msg['content'])
+        else:
+            st.chat_message("user").write(msg['content'])
 
-                with st.chat_messages("assistant"):
-                    st_callback  = StreamlitCallbackHandler(st.container(), expand_new_thoughts=False)
-                    response = tools_agent.invoke(st.session_state.messages, callbacks=[st_callback])
-                    st.session_state.messages.append({"role":"assistant", "content":response})
-                    st.write(response)
-
-
+                 
 
