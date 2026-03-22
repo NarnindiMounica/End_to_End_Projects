@@ -3,6 +3,8 @@ streamlit
 langchain_core
 langchain_groq
 langchain_community
-validator
+validators
 youtube-transcript-api
 langchain_text_splitters
+pytube
+unstructured
