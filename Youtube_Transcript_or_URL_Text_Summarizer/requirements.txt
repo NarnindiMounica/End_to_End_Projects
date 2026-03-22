@@ -5,3 +5,4 @@ langchain_groq
 langchain_community
 validator
 youtube-transcript-api
+langchain_text_splitters
