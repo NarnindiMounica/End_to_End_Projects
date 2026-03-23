@@ -1,0 +1,12 @@
+streamlit 
+langchain
+langchain-groq
+langchain-huggingface
+python-dotenv
+langchain-astradb
+datasets
+langchain_community
+langchain_core
+PyPDF2
+sentence-transformers
+pypdf
