@@ -17,11 +17,11 @@ def generate_response(prompt):
         "stream": False
     }
 
-    response = requests.post(url, headers=headers, data=json.dump(data))
+    response = requests.post(url, headers=headers, data=json.dumps(data))
 
     if response.status_code==200:
         response=response.text
-        final_response=json.load(response)
+        final_response=json.loads(response)
         final_response=final_response['response']
         return final_response
     else:
