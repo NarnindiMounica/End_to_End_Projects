@@ -66,5 +66,39 @@ else:
     st.error("Database Connection Failed")
     st.stop()
 
+#toolkit configuration
+db_toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+tools = db_toolkit.get_tools()
+
+#creating mysql agent
+agent = create_sql_agent(
+    llm=llm,
+    toolkit=db_toolkit,
+    verbose=True
+)
+
+#conversation messages
+
+if "messages" not in st.session_state or st.sidebar.button("Clear Conversation History"):
+    st.session_state['messages']=[{"role":"assistant", "content":"Hello, How can I help you?"}]
+
+#displaying past converstaion if any
+for msg in st.session_state['messages']:
+    st.chat_message(msg['role']).write(msg['content'])
+
+#getting user query
+user_in=st.chat_input("Please ask your query here..")
+
+if user_in:
+    st.session_state['messages'].append({"role":"user", "content":user_in})
+    st.chat_message("user").write(user_in)
+
+    response=agent.run(user_in)
+    st.session_state['messages'].append({"role":"assistant", "content": response})
+    st.success(response)
+
+
+
+
 
 
