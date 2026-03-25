@@ -45,4 +45,26 @@ llm = ChatGroq(groq_api_key=groq_api_key, model="llama-3.1-8b-instant")
 def configure_db(db_url, mysql_host=None, mysql_db=None, mysql_username=None, mysql_userpassword=None):
     if db_url==radio_options[0]:
         db_filepath=(Path(__file__).parent/"students.db").absolute()
+        print(db_filepath)
+        creator = lambda : sqlite3.connect(f"file:{db_filepath}?mode=ro", uri=True)
+        return SQLDatabase(create_engine("sqlite:///", creator=creator))
+    elif db_url==radio_options[1]:
+        if not (mysql_host and mysql_db and mysql_username and mysql_userpassword):
+            return None
+        else:
+            return SQLDatabase(create_engine(f"mysql+mysqlconnector://{mysql_username}:{mysql_userpassword}@{mysql_host}/{mysql_db}"))
+        
+if db_url==radio_options[1]:
+    if  (db_host and db_userdb and db_username and db_userpassword ):
+        db=configure_db(db_url, db_host, db_userdb, db_username, db_userpassword)
+    else:
+        st.error("Please enter all MySQL Connection details")
+        st.stop()
+elif db_url==radio_options[0]:
+    db=configure_db(db_url)
+else: 
+    st.error("Database Connection Failed")
+    st.stop()
+
+
 
