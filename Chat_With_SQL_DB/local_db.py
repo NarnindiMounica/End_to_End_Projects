@@ -38,3 +38,7 @@ rows = cursor.execute('''select * from student''')
 
 for row in rows:
     print(row)
+
+#committing changes in your database
+connection.commit()
+connection.close()    
