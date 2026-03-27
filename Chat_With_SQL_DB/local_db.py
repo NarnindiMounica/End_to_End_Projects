@@ -39,6 +39,33 @@ rows = cursor.execute('''select * from student''')
 for row in rows:
     print(row)
 
+print("\n") 
+
+#drop is table already exists
+cursor.execute('''drop table if exists teacher''')
+#teachers table info
+teacher_table_info = '''
+create table teacher(
+name varchar(25),
+subject varchar(25),
+experience int
+)'''
+
+#execution command for teacher table creation
+cursor.execute(teacher_table_info)
+
+#to insert records in teacher table
+cursor.execute('''insert into teacher values("Manny", "Agentic AI", 6)''')
+cursor.execute('''insert into teacher values("Tom", "Data Science", 2)''')
+cursor.execute('''insert into teacher values("Mark", "Deep Learning", 4)''')
+cursor.execute('''insert into teacher values("Ruby", "Data Science", 3)''')
+
+#to display records
+teacher_records=cursor.execute('''select * from teacher''')
+
+for record in teacher_records:
+    print(record)
+
 #committing changes in your database
 connection.commit()
-connection.close()    
+connection.close()      
