@@ -13,4 +13,14 @@ class Config:
         model_options = self.config['DEFAULT'].get("MODELS").split(", ")
         return model_options
     
-    def groq_model
+    def groq_model_types(self):
+        groq_model_options = self.config['DEFAULT'].get("GROQ_MODEL_TYPES").split(", ")
+        return groq_model_options
+    
+    def ollama_model_types(self):
+        ollama_model_options = self.config['DEFAULT'].get("OLLAMA_MODEL_TYPES").split(", ")
+        return ollama_model_options
+    
+    def usecases(self):
+        usecase_options = self.config['DEFAULT'].get("USECASES").split(", ")
+        return usecase_options
