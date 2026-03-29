@@ -6,3 +6,4 @@ langchain_core
 langgraph
 langchain_groq
 tavily
+langchain_ollama
