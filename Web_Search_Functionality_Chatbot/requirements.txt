@@ -1,0 +1,8 @@
+streamlit
+configparser
+langchain
+langchain_community
+langchain_core
+langgraph
+langchain_groq
+tavily
