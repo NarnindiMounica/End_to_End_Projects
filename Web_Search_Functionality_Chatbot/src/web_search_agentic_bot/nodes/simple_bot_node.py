@@ -1,4 +1,4 @@
-
+from src.web_search_agentic_bot.states.simple_state import SimpleState
 
 class SimpleBotNode:
 
