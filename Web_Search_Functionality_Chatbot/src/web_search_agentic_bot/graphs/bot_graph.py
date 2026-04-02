@@ -23,7 +23,7 @@ class SelectGraph:
     def get_usecase_graph(self, usecase):
 
         if usecase=="Generic Search":
-            graph = self.base_graph_design(self.model)
+            graph = self.base_graph_design()
             graph_builder = graph.compile()
             return graph_builder
 
