@@ -3,15 +3,14 @@ from langgraph.prebuilt import ToolNode
 
 class ToolsNode:
 
-    def __init__(self):
-        pass
-
     def get_bind_tools(self):
 
-        tavily_tool = TavilySearch(max_serach=5, topic="general", search_depth="basic")
-        tools=[tavily_tool]
+        tavily_tool = TavilySearch(max_search=2, topic="general", search_depth="basic")
+        tools=[tavily_tool,]
         return tools
     
-    def get_tool_node(self):
-        return ToolNode(self.get_bind_tools())
+    def get_tool_node(self, *args, **kwargs):
+        tools = self.get_bind_tools()
+        tool_node = ToolNode(tools)
+        return tool_node
 

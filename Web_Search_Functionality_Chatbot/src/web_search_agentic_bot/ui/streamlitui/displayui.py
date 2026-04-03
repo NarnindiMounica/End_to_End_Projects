@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+from pprint import pprint
 
 class DisplayStreamlitUI:
     def __init__(self, graph, usecase, user_message):
@@ -28,6 +29,6 @@ class DisplayStreamlitUI:
             with st.chat_message("user"):
                 st.write(user_message)
             with st.chat_message("assistant"):
-                st.write(event['messages'][-1])          
+                st.write(event["messages"])          
 
 

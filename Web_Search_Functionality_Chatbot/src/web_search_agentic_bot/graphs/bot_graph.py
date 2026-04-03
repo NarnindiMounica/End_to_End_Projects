@@ -32,7 +32,7 @@ class SelectGraph:
 
         #adding edges
         self.graph.add_edge(START, "get_simple_bot_node")
-        self.graph.add_edge("get_simple_bot_node", tools_condition)
+        self.graph.add_conditional_edges("get_simple_bot_node", tools_condition)
         self.graph.add_edge("tools", "get_simple_bot_node")
         self.graph.add_edge("get_simple_bot_node", END)
 
