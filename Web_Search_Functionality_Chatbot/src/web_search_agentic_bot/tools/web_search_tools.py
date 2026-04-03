@@ -3,8 +3,8 @@ from langgraph.prebuilt import ToolNode
 
 class ToolsNode:
 
-    def __init__(self, user_controls):
-        self.user_controls = user_controls
+    def __init__(self):
+        pass
 
     def get_bind_tools(self):
 
