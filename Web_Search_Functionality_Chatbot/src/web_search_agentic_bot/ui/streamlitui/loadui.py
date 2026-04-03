@@ -29,7 +29,11 @@ class LoadStreamlitUI:
                 self.user_controls['selected_ollama_model']=st.selectbox("Select Ollama model type", ollama_model_options)
 
             usecase_options = self.config.get_usecases()
-            self.user_controls['selected_usecase'] = st.selectbox("Select a Usecase", usecase_options)  
+            self.user_controls['selected_usecase'] = st.selectbox("Select a Usecase", usecase_options) 
+
+            if self.user_controls['selected_usecase']=="Web_Search":
+                os.environ['TAVILY_API_KEY']=self.user_controls['TAVILY_API_KEY']=st.text_input("Enter your Tavily API Key",type="password")
+
 
         return self.user_controls    
 

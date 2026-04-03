@@ -1,1 +1,1 @@
-from 
+from langchain_tavily import TavilySearch

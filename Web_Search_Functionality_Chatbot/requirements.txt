@@ -7,3 +7,5 @@ langgraph
 langchain_groq
 tavily
 langchain_ollama
+langchain-tavily
+python-dotenv
