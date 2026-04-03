@@ -15,12 +15,15 @@ def get_websearch_bot():
     if user_message:
         if user_controls['selected_model']=="Groq":
             model_obj = GroqModel(user_controls=user_controls).get_simple_groq_model()
-            graph_obj = SelectGraph(model=model_obj)
-            usecase = user_controls['selected_usecase']
-            usecase_graph_obj = graph_obj.get_usecase_graph(usecase=usecase)
+        elif user_controls['selected_model']=="Ollama":
+            model_obj = OllamaModel(user_controls=user_controls).get_simple_ollama_model()   
 
-            display_ui_obj = DisplayStreamlitUI(graph=usecase_graph_obj, usecase=usecase, user_message=user_message)
+        graph_obj = SelectGraph(model=model_obj)
+        usecase = user_controls['selected_usecase']
+        usecase_graph_obj = graph_obj.get_usecase_graph(usecase=usecase)
+
+        display_ui_obj = DisplayStreamlitUI(graph=usecase_graph_obj, usecase=usecase, user_message=user_message)
             
-            display_ui_obj.display_streamlit_ui()
+        display_ui_obj.display_streamlit_ui()
 
         
