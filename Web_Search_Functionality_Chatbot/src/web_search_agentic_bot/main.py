@@ -13,13 +13,22 @@ def get_websearch_bot():
     user_message= st.text_input("Enter your query")
 
     if user_message:
+
+        usecase = user_controls['selected_usecase']
         if user_controls['selected_model']=="Groq":
-            model_obj = GroqModel(user_controls=user_controls).get_simple_groq_model()
+            if usecase.lower()=="generic search":
+                model_obj = GroqModel(user_controls=user_controls).get_simple_groq_model()
+            elif usecase.lower()=="web search":
+                model_obj = GroqModel(user_controls=user_controls).get_web_search_tool_groq_model() 
+
         elif user_controls['selected_model']=="Ollama":
-            model_obj = OllamaModel(user_controls=user_controls).get_simple_ollama_model()   
+            if usecase.lower()=="web search":
+                model_obj = OllamaModel(user_controls=user_controls).get_simple_ollama_model() 
+            elif usecase.lower()=="web search":
+                model_obj = OllamaModel(user_controls=user_controls).get_web_search_tool_ollama_model()      
 
         graph_obj = SelectGraph(model=model_obj)
-        usecase = user_controls['selected_usecase']
+        
         usecase_graph_obj = graph_obj.get_usecase_graph(usecase=usecase)
 
         display_ui_obj = DisplayStreamlitUI(graph=usecase_graph_obj, usecase=usecase, user_message=user_message)
