@@ -21,7 +21,7 @@ def get_websearch_bot():
         usecase = user_controls['selected_usecase']
         if user_controls['selected_model']=="Groq":
             if usecase.lower()=="generic search" or usecase.lower()=="ai news summary":
-                model_obj = GroqModel(user_controls=user_controls).get_simple_groq_model()
+                model_obj = GroqModel(user_controls=user_controls).get_simple_groq_model(
             elif usecase.lower()=="web search":
                 model_obj = GroqModel(user_controls=user_controls).get_web_search_tool_groq_model() 
 
