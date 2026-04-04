@@ -37,6 +37,23 @@ class SelectGraph:
         self.graph.add_edge("get_simple_bot_node", END)
 
         return self.graph
+    
+    def ai_news_graph_design(self):
+        bot_obj = SimpleBotNode(self.model)
+        tool_obj = ToolsNode()
+
+        #adding node
+        self.graph.add_node("fetch_news_node")
+        self.graph.add_node("summarize_news_node")
+        self.graph.add_node("save_results_node")
+
+        #adding edges
+        self.graph.set_entry_point("fetch_news_node")
+        self.graph.add_edge("fetch_news_node", "summarize_news_node")
+        self.graph.add_edge("summarize_news_node", "save_results_node")
+        self.graph.add_edge("save_results_node", END)
+
+        return self.graph
 
     def get_usecase_graph(self, usecase):
 
@@ -47,6 +64,11 @@ class SelectGraph:
         
         elif usecase=="Web Search":
             graph = self.web_search_graph_design()
+            graph_builder = graph.compile()
+            return graph_builder
+        
+        elif usecase=="AI News Summary":
+            graph = self.ai_news_graph_design()
             graph_builder = graph.compile()
             return graph_builder
 

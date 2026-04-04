@@ -42,7 +42,6 @@ class LoadStreamlitUI:
                     st.session_state['time_frame']=self.user_controls['selected_time_frame']
 
 
-
         return self.user_controls    
 
 
