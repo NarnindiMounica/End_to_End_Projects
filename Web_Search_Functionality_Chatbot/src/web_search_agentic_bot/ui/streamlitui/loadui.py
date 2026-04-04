@@ -15,6 +15,8 @@ class LoadStreamlitUI:
         st.title("👨‍💻🎧 "+ self.config.get_page_title()) 
 
         with st.sidebar:
+            self.user_controls['fetch_ai_news'] = " "
+            self.user_controls['time_frame'] = "daily"
             model_options = self.config.get_models()
             self.user_controls['selected_model']=st.selectbox("Select your model", model_options) 
 
@@ -36,10 +38,12 @@ class LoadStreamlitUI:
 
             if self.user_controls['selected_usecase']=="AI News Summary":
                 st.subheader("Get AI News")
-                self.user_controls['selected_time_frame'] =st.selectbox("⏳ Select Time Frame To Get AI News", ['Daily', 'Weekly', 'Monthly'])
+                self.user_controls['selected_time_frame'] =st.selectbox("⏳ Select Time Frame To Get AI News", ['Daily', 'Weekly', 'Monthly']).lower()
 
                 if st.button("Fetch AI News 🔎"):
-                    st.session_state['time_frame']=self.user_controls['selected_time_frame']
+                    
+                    self.user_controls['fetch_ai_news']=True
+                    self.user_controls['time_frame']=self.user_controls['selected_time_frame'].lower()
 
 
         return self.user_controls    

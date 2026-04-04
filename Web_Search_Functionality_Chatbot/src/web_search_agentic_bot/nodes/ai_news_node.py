@@ -1,4 +1,4 @@
-from langchain_tavily import TavilyClient
+from tavily import TavilyClient
 from langchain_core.prompts import ChatPromptTemplate
 
 class AINewsNodes:
@@ -12,7 +12,7 @@ class AINewsNodes:
 
         frequency = state['messages'][0].content.lower()
         self.state['frequency'] = frequency
-        time_range_map = {"Daily":"d", "Weekly":"w", "Monthly": "m"}
+        time_range_map = {"daily":"d", "weekly":"w", "monthly": "m"}
 
         response = self.tavily.search(
             query="Top Artificial Intelligence News from India and Globally",
@@ -47,7 +47,7 @@ class AINewsNodes:
             f"Content: {item.get("content", " ")}\n URL: {item.get("url", " ")}\n Date: {item.get("published_date", " ")}"
         for item in news_items])
 
-        summarized_content = self.model.invoke(summarize_prompt.format({"articles":articles_str}))
+        summarized_content = self.model.invoke(summarize_prompt.format(articles=articles_str))
 
         state['summary'] = summarized_content.content
         self.state['summary'] = state['summary']
@@ -59,7 +59,7 @@ class AINewsNodes:
         summary = self.state['summary']
         filename = f"D:\\End_To_End_Projects\\Web_Search_Functionality_Chatbot\\AI_News\\{frequency}_summary.md"
         with open(filename, "w") as f:
-            f.write(f"#{frequency.captialize()}_AI_News_Summary")
+            f.write(f"#{frequency.capitalize()}_AI_News_Summary#\n")
             f.write(summary)
         self.state['filename'] = filename
         state['filename'] = self.state['filename']

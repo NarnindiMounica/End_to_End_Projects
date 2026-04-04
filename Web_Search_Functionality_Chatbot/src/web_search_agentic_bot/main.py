@@ -10,7 +10,11 @@ from src.web_search_agentic_bot.graphs.bot_graph import SelectGraph
 def get_websearch_bot():
     user_controls = LoadStreamlitUI().load_streamlit_ui()
 
-    user_message= st.text_input("Enter your query")
+    if user_controls['fetch_ai_news'] is not " ":
+        user_message = user_controls['time_frame']
+    else:    
+        user_message= st.text_input("Enter your query")
+
 
     if user_message:
 

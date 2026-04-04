@@ -39,15 +39,21 @@ class DisplayStreamlitUI:
                         st.write(message.content)
 
         elif usecase.lower()=="ai news summary":
-            response = graph.invoke({'messages': user_message})
-            
-            for message in response['messages']:
-                if type(message)==HumanMessage:
-                    with st.chat_message("user"):
-                        st.write(message.content)
-                elif type(message)==AIMessage:
-                    with st.chat_message("assistant"):
-                        st.write(message.content)
+            frequency = self.user_message
+            with st.spinner("⏳Fetching and Summarizing News"):
+                response = graph.invoke({'messages': frequency})
+                try:
+                    #reading markdown file
+                    file_path = f"D:\\End_To_End_Projects\\Web_Search_Functionality_Chatbot\\AI_News\\{frequency}_summary.md"
+                    with open(file_path, "r") as f:
+                        markdown_content=f.read()
+
+                    #displaying markdown content in streamlit
+                    st.markdown(markdown_content, unsafe_allow_html=True)
+                except FileNotFoundError:
+                    st.error(f"News not generated or file not found:{file_path}") 
+                except Exception as e:
+                    st.error(f"Error occurred: {str(e)}")           
 
 
 
