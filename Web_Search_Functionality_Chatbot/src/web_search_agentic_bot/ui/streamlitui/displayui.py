@@ -1,6 +1,6 @@
 import os
 import streamlit as st
-from pprint import pprint
+from langchain_core.messages import ToolMessage, AIMessage, HumanMessage
 
 class DisplayStreamlitUI:
     def __init__(self, graph, usecase, user_message):
@@ -23,12 +23,31 @@ class DisplayStreamlitUI:
                 st.write(event['messages'][-1].content) 
 
         elif usecase.lower()=="web search":
-            for event in graph.stream({'messages': user_message}, stream_mode="values"):
-                print(event.values())
+            response = graph.invoke({'messages': user_message})
+            
+            for message in response['messages']:
+                if type(message)==HumanMessage:
+                    with st.chat_message("user"):
+                        st.write(message.content)
+                elif type(message)==ToolMessage:
+                    with st.chat_message("ai"):
+                        st.write("Tool Call Start")
+                        st.write(message.content)
+                        st.write("Tool Call End")
+                else:
+                    with st.chat_message("assistant"):
+                        st.write(message.content)
 
-            with st.chat_message("user"):
-                st.write(user_message)
-            with st.chat_message("assistant"):
-                st.write(event["messages"])          
+        elif usecase.lower()=="ai news summary":
+            response = graph.invoke({'messages': user_message})
+            
+            for message in response['messages']:
+                if type(message)==HumanMessage:
+                    with st.chat_message("user"):
+                        st.write(message.content)
+                elif type(message)==AIMessage:
+                    with st.chat_message("assistant"):
+                        st.write(message.content)
+
 
 
