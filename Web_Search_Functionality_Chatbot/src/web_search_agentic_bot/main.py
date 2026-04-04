@@ -16,13 +16,13 @@ def get_websearch_bot():
 
         usecase = user_controls['selected_usecase']
         if user_controls['selected_model']=="Groq":
-            if usecase.lower()=="generic search":
+            if usecase.lower()=="generic search" or usecase.lower()=="ai news summary":
                 model_obj = GroqModel(user_controls=user_controls).get_simple_groq_model()
             elif usecase.lower()=="web search":
                 model_obj = GroqModel(user_controls=user_controls).get_web_search_tool_groq_model() 
 
         elif user_controls['selected_model']=="Ollama":
-            if usecase.lower()=="web search":
+            if usecase.lower()=="web search" or usecase.lower()=="ai news summary":
                 model_obj = OllamaModel(user_controls=user_controls).get_simple_ollama_model() 
             elif usecase.lower()=="web search":
                 model_obj = OllamaModel(user_controls=user_controls).get_web_search_tool_ollama_model()      
