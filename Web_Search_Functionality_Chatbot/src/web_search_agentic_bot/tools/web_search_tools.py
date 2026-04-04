@@ -9,8 +9,4 @@ class ToolsNode:
         tools=[tavily_tool,]
         return tools
     
-    def get_tool_node(self, *args, **kwargs):
-        tools = self.get_bind_tools()
-        tool_node = ToolNode(tools)
-        return tool_node
 

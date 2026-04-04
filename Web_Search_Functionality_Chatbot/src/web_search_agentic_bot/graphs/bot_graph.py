@@ -2,7 +2,7 @@ from src.web_search_agentic_bot.states.simple_state import SimpleState
 from src.web_search_agentic_bot.nodes.simple_bot_node import SimpleBotNode
 from src.web_search_agentic_bot.tools.web_search_tools import ToolsNode
 
-from langgraph.prebuilt import tools_condition
+from langgraph.prebuilt import tools_condition, ToolNode
 from langgraph.graph import StateGraph, START, END
 
 class SelectGraph:
@@ -28,7 +28,7 @@ class SelectGraph:
 
         #adding node
         self.graph.add_node("get_simple_bot_node", bot_obj.get_simple_bot_node)
-        self.graph.add_node("tools", tool_obj.get_tool_node)
+        self.graph.add_node("tools", ToolNode(tool_obj.get_bind_tools()))
 
         #adding edges
         self.graph.add_edge(START, "get_simple_bot_node")
