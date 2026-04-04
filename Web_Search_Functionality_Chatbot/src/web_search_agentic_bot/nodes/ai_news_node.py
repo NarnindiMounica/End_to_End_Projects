@@ -8,7 +8,7 @@ class AINewsNodes:
         self.model = model
         self.state = {} #used to capture various steps in this file which will be used later
 
-    def fetch_ai_news(self, state:dict)->dict:
+    def fetch_ai_news_node(self, state:dict)->dict:
 
         frequency = state['messages'][0].content.lower()
         self.state['frequency'] = frequency
@@ -54,10 +54,10 @@ class AINewsNodes:
 
         return state
     
-    def save_results(self, state:dict)->dict:
+    def save_results_node(self, state:dict)->dict:
         frequency = self.state['frequency']
         summary = self.state['summary']
-        filename = f"./AI_News/{frequency}_summary.md"
+        filename = f"D:\\End_To_End_Projects\\Web_Search_Functionality_Chatbot\\AI_News\\{frequency}_summary.md"
         with open(filename, "w") as f:
             f.write(f"#{frequency.captialize()}_AI_News_Summary")
             f.write(summary)

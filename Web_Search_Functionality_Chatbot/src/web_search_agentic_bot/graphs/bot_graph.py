@@ -1,6 +1,7 @@
 from src.web_search_agentic_bot.states.simple_state import SimpleState
 from src.web_search_agentic_bot.nodes.simple_bot_node import SimpleBotNode
 from src.web_search_agentic_bot.tools.web_search_tools import ToolsNode
+from src.web_search_agentic_bot.nodes.ai_news_node import AINewsNodes
 
 from langgraph.prebuilt import tools_condition, ToolNode
 from langgraph.graph import StateGraph, START, END
@@ -39,13 +40,12 @@ class SelectGraph:
         return self.graph
     
     def ai_news_graph_design(self):
-        bot_obj = SimpleBotNode(self.model)
-        tool_obj = ToolsNode()
-
+        ai_news_nodes_obj = AINewsNodes(self.model)
+        
         #adding node
-        self.graph.add_node("fetch_news_node")
-        self.graph.add_node("summarize_news_node")
-        self.graph.add_node("save_results_node")
+        self.graph.add_node("fetch_news_node", ai_news_nodes_obj.fetch_ai_news_node)
+        self.graph.add_node("summarize_news_node", ai_news_nodes_obj.summarize_news_node)
+        self.graph.add_node("save_results_node", ai_news_nodes_obj.save_results_node)
 
         #adding edges
         self.graph.set_entry_point("fetch_news_node")
