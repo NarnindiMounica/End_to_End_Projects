@@ -31,8 +31,16 @@ class LoadStreamlitUI:
             usecase_options = self.config.get_usecases()
             self.user_controls['selected_usecase'] = st.selectbox("Select a Usecase", usecase_options) 
 
-            if self.user_controls['selected_usecase']=="Web Search":
+            if self.user_controls['selected_usecase']=="Web Search" or self.user_controls['selected_usecase']=="AI News Summary":
                 os.environ['TAVILY_API_KEY']=self.user_controls['TAVILY_API_KEY']=st.text_input("Enter your Tavily API Key",type="password")
+
+            if self.user_controls['selected_usecase']=="AI News Summary":
+                st.subheader("Get AI News")
+                self.user_controls['selected_time_frame'] =st.selectbox("⏳ Select Time Frame To Get AI News", ['Daily', 'Weekly', 'Monthly'])
+
+                if st.button("Fetch AI News 🔎"):
+                    st.session_state['time_frame']=self.user_controls['selected_time_frame']
+
 
 
         return self.user_controls    
