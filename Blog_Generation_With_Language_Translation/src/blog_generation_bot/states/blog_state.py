@@ -1,5 +1,4 @@
 from typing_extensions import TypedDict
-from pydantic import BaseModel
 
 class Blog(TypedDict):
     title:str
