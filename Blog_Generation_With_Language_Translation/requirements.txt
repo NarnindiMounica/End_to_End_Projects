@@ -1,0 +1,11 @@
+langchain
+langgraph
+langchain_groq
+langchain_ollama
+fastapi
+uvicorn
+langchain_community
+langchain_core
+langgraph-cli[inmem]
+typing_extensions
+pydantic
