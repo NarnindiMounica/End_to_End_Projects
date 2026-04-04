@@ -5,7 +5,7 @@ class Blog(TypedDict):
     title:str
     content:str
 
-class BlogState(BaseModel):
+class BlogState(TypedDict):
     topic:str
     blog:Blog 
     current_language:str   

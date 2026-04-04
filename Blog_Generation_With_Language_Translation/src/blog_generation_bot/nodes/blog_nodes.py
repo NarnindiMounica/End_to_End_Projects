@@ -5,26 +5,27 @@ class BlogNodes:
 
     def __init__(self, llm):
         self.llm = llm
-        self.state=BlogState
+
         
-    def title_creation_node(self, BlogState):
+    def title_creation_node(self, state:BlogState):
+        if "topic" in state or state['topic']:
 
-        system_prompt = """
-                        You are an expert in blog creation.
-                        Give a suitable title for the given topic in Markdown format.
-                        The title should be creative and SEO friendly.
-                        Topic: {topic}"""
-        
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", system_prompt)
-        ])
+            system_prompt = """
+                            You are an expert in blog creation.
+                            Give a suitable title for the given topic in Markdown format.
+                            The title should be creative and SEO friendly.
+                            Topic: {topic}"""
+            
+            prompt = ChatPromptTemplate.from_messages([
+                ("system", system_prompt)
+            ])
 
-        response = self.llm.invoke(prompt.format(topic=self.state.topic))
+            response = self.llm.invoke(prompt.format(topic=state['topic']))
 
-        return {self.state.blog['title']: response.content}
+            return {'blog':{'title': response.content}}
 
 
-    def content_generation_node(self, BlogState):
+    def content_generation_node(self, state:BlogState):
 
         system_prompt = """
                         You are an expert in blog creation.
@@ -36,8 +37,8 @@ class BlogNodes:
             ("system", system_prompt)
         ])
 
-        response = self.llm.invoke(prompt.format(title=self.state.blog['title']))
+        response = self.llm.invoke(prompt.format(title=state['blog']['title']))
 
-        return {self.state.blog['content']: response.content}
+        return {'blog':{'content': response.content}}
 
         

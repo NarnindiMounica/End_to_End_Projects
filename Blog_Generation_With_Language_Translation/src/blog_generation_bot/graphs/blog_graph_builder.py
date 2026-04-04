@@ -3,7 +3,7 @@ from langgraph.graph import StateGraph, START, END
 from src.blog_generation_bot.states.blog_state import BlogState
 from src.blog_generation_bot.nodes.blog_nodes import BlogNodes
 
-class BlogGraphBUilder:
+class BlogGraphBuilder:
 
     def __init__(self, llm):
         self.llm = llm
@@ -22,10 +22,13 @@ class BlogGraphBUilder:
         self.graph.add_edge("title_creation_node", "content_generation_node")
         self.graph.add_edge("content_generation_node", END)
 
-        #graph builder
-        graph_builder = self.graph.compile()
+        return self.graph
+    
+    def get_setup_graph(self, usecase):
 
-        return graph_builder
+        if usecase=="topic":
+            return self.get_blog_graph_builder().compile()
+
 
 
 
