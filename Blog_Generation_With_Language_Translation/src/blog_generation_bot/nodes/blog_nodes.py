@@ -1,4 +1,4 @@
-from src.blog_generation_bot.states.blog_state import BlogState
+from src.blog_generation_bot.states.blog_state import BlogState, Blog
 from langchain_core.prompts import ChatPromptTemplate
 
 class BlogNodes:
@@ -40,5 +40,30 @@ class BlogNodes:
         response = self.llm.invoke(prompt.format(title=state['blog']['title']))
 
         return {'blog':{'content': response.content}}
+    
+    def language_translation_node(self, state:BlogState):
+
+        system_prompt = """
+                        You are a multiligual specialist.
+                        Translate the given content in desired language without changing the intent and tone of the content.
+                        Maintain the same format as given in original content.
+                        content: {content}
+                        language: {language}
+                        """
+        
+        prompt = ChatPromptTemplate.from_messages(
+            [
+            ("system", system_prompt),
+        ])
+
+        response = self.llm.with_structured_output(Blog).invoke(prompt.format(content=state['blog']['content'],
+                                                                              language=state['current_language']))
+        
+        return {"blog":{"content": response.content}}
+    
+
+    def route_decision_maker(self, state:BlogState):
+
+        return state['current_language']
 
         
