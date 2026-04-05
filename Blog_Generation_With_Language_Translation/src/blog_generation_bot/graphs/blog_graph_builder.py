@@ -28,7 +28,15 @@ class BlogGraphBuilder:
 
         if usecase=="topic":
             return self.get_blog_graph_builder().compile()
+        
 
+#below code is for langgraph studio
+
+from src.blog_generation_bot.llms.groq_model import GroqModel
+
+llm = GroqModel().get_groq_model()
+graph_builder = BlogGraphBuilder(llm=llm)
+blog_agent = graph_builder.get_blog_graph_builder().compile()
 
 
 
