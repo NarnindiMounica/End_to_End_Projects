@@ -31,9 +31,9 @@ class BlogGraphBuilder:
 
         self.graph.add_node("title_creation_node",blog_nodes_obj.title_creation_node)
         self.graph.add_node("content_generation_node",blog_nodes_obj.content_generation_node)
-        self.graph.add_node("language_router", blog_nodes_obj.route_decision_maker)
-        self.graph.add_node("hindi_translator", lambda state : blog_nodes_obj.language_translation_node(**state, current_language="hindi"))
-        self.graph.add_node("telugu_translator", lambda state : blog_nodes_obj.language_translation_node(**state, current_language="telugu"))
+        self.graph.add_node("language_router", blog_nodes_obj.language_router)
+        self.graph.add_node("hindi_translator", lambda state : blog_nodes_obj.language_translation_node({**state, "current_language":"hindi"}))
+        self.graph.add_node("telugu_translator", lambda state : blog_nodes_obj.language_translation_node({**state, "current_language":"telugu"}))
 
         #adding edges
 
@@ -45,6 +45,8 @@ class BlogGraphBuilder:
                                           "telugu":"telugu_translator"})
         self.graph.add_edge("hindi_translator", END)
         self.graph.add_edge("telugu_translator", END)
+
+        return self.graph
 
     
     def get_setup_graph(self, usecase):
@@ -62,7 +64,7 @@ from src.blog_generation_bot.llms.groq_model import GroqModel
 
 llm = GroqModel().get_groq_model()
 graph_builder = BlogGraphBuilder(llm=llm)
-# blog_agent = graph_builder.get_blog_graph_builder().compile()
+# # blog_agent = graph_builder.get_blog_graph_builder().compile()
 lang_blog_agent = graph_builder.get_language_blog_graph_builder().compile()
 
 

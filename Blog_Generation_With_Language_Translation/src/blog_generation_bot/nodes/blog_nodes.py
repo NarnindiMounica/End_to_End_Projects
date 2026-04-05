@@ -1,5 +1,6 @@
 from src.blog_generation_bot.states.blog_state import BlogState, Blog
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.messages import HumanMessage
 
 class BlogNodes:
 
@@ -39,31 +40,39 @@ class BlogNodes:
 
         response = self.llm.invoke(prompt.format(title=state['blog']['title']))
 
-        return {'blog':{'content': response.content}}
+        return {'blog':{'title': state['blog']['title'], 'content': response.content}}
     
     def language_translation_node(self, state:BlogState):
 
-        system_prompt = """
-                        You are a multiligual specialist.
-                        Translate the given content in desired language without changing the intent and tone of the content.
-                        Maintain the same format as given in original content.
-                        content: {content}
-                        language: {language}
+        translational_prompt = """
+                        Translate the following content into {current_language} language.
+                        - Maintain original tone, style and formatting.
+                        - Adapt cultural references and idioms to be suitable for {current_language} language.
+                        - Return the result strictly in two fields "title" and "content".
+                        - Keep the content of around 1000 words.
+                        original content: {blog_content}
                         """
+        blog_content= state['blog']['content']
+        messages=[
+            HumanMessage(translational_prompt.format(blog_content=blog_content, current_language=state['current_language']))
+        ]
+       
+        response = self.llm.with_structured_output(Blog).invoke(messages)
         
-        prompt = ChatPromptTemplate.from_messages(
-            [
-            ("system", system_prompt),
-        ])
-
-        response = self.llm.with_structured_output(Blog).invoke(prompt.format(content=state['blog']['content'],
-                                                                              language=state['current_language']))
-        
-        return {"blog":{"content": response.content}}
+        return {"topic": state['topic'], "blog":{"title":response['title'], "content": response['content']}, "current_language": state['current_language']}
     
 
+    def language_router(self, state:BlogState):
+
+        return {"current_language": state['current_language']}
+    
     def route_decision_maker(self, state:BlogState):
 
-        return state['current_language']
+        if state['current_language']=="hindi":
+            return "hindi"
+        elif state['current_language']=="telugu":
+            return "telugu"
+        
+
 
         

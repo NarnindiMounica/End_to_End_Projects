@@ -6,5 +6,5 @@ class Blog(TypedDict):
 
 class BlogState(TypedDict):
     topic:str
-    blog:Blog 
+    blog:Blog
     current_language:str   

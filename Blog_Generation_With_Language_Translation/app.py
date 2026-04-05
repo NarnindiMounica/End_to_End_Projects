@@ -18,15 +18,23 @@ app = FastAPI()
 async def create_blogs(request:Request):
     data = await request.json()
     topic = data.get("topic","")
+    current_language = data.get("current_language", "")
 
     #get llm model
 
     llm = GroqModel().get_groq_model()
-
+    usecase = ""
     #get the graph
     graph_obj = BlogGraphBuilder(llm=llm)
-    graph = graph_obj.get_setup_graph(usecase="topic")
-    state = graph.invoke({"topic": topic})
+    if current_language == "":
+
+        graph = graph_obj.get_setup_graph(usecase="topic")
+        state = graph.invoke({"topic": topic})
+
+    else:
+
+        graph = graph_obj.get_setup_graph(usecase="language")  
+        state = graph.invoke({"topic":topic, "current_language": current_language})  
 
     return {"data":state}
 
