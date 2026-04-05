@@ -1,6 +1,6 @@
 {
     "dependencies": ["."],
-    "graphs":{"blog_generation_agent":"./src/blog_generation_bot/graphs/blog_graph_builder.py:blog_agent"},
+    "graphs":{"blog_generation_agent":"./src/blog_generation_bot/graphs/blog_graph_builder.py:lang_blog_agent"},
     "env":"./.env"
 
 }
