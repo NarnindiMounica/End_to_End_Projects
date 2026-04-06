@@ -59,7 +59,7 @@ class BlogNodes:
        
         response = self.llm.with_structured_output(Blog).invoke(messages)
         
-        return {"topic": state['topic'], "blog":{"title":response['title'], "content": response['content']}, "current_language": state['current_language']
+        return {"topic": state['topic'], "blog":{"title":response['title'], "content": response['content']}, "current_language": state['current_language']}
     
 
     def language_router(self, state:BlogState):
