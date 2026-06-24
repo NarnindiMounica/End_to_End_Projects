@@ -4,4 +4,4 @@ pandas
 tensorflow
 tensorboard
 scikit-learn
-
+streamlit
