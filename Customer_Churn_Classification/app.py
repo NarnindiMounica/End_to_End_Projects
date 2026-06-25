@@ -11,8 +11,8 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder, OneHotEncoder
 st.title("Customer Churn Classification")
 
 #loading model
-model_filepath = "D:\End_To_End_Projects\Customer_Churn_Classification\model.keras"
-model = load_model(model_filepath)
+
+model = load_model("model.keras")
 
 #loading encoding and scaler objects
 
