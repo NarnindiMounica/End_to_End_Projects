@@ -1,7 +1,7 @@
 ipykernel
 numpy
 pandas
-tensorflow==2.15.1
+tensorflow==2.15.0
 tensorboard
 scikit-learn
 streamlit
