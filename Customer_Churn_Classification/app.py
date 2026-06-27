@@ -73,7 +73,7 @@ st.write(f"Prediction_Probability: {prediction}")
 if prediction > 0.5:
     st.write("Customer is likely to churn")
 else:
-    st.write("Customer is not likely to churn"    
+    st.write("Customer is not likely to churn")   
 
 
 
