@@ -12,7 +12,7 @@ st.title("Customer Churn Classification")
 
 #loading model
 
-model = load_model("model.keras")
+model = load_model("Customer_Churn_Classification/model.keras")
 
 #loading encoding and scaler objects
 
