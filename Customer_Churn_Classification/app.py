@@ -16,13 +16,13 @@ model = load_model("Customer_Churn_Classification/model.keras")
 
 #loading encoding and scaler objects
 
-with open('standard_scaler.pkl', 'rb') as file_obj:
+with open('Customer_Churn_Classification/standard_scaler.pkl', 'rb') as file_obj:
     scaler = pickle.load(file_obj)
 
-with open('onehot_encoder.pkl', 'rb') as file_obj:
+with open('Customer_Churn_Classification/onehot_encoder.pkl', 'rb') as file_obj:
     onehot_encoder = pickle.load(file_obj)
 
-with open('label_encoder.pkl', 'rb') as file_obj:
+with open('Customer_Churn_Classification/label_encoder.pkl', 'rb') as file_obj:
     label_encoder = pickle.load(file_obj)        
 
 #user inputs
