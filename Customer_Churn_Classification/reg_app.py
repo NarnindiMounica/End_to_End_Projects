@@ -12,17 +12,17 @@ st.title("Customer Salary Prediction")
 
 #loading model
 
-model = load_model("Customer_Churn_Classification/reg_model.keras")
+model = load_model("reg_model.keras")
 
 #loading encoding and scaler objects
 
-with open('Customer_Churn_Classification/scaler_regression.pkl', 'rb') as file_obj:
+with open('scaler_regression.pkl', 'rb') as file_obj:
     scaler = pickle.load(file_obj)
 
-with open('Customer_Churn_Classification/onehot_encoder_regression.pkl', 'rb') as file_obj:
+with open('onehot_encoder_regression.pkl', 'rb') as file_obj:
     onehot_encoder = pickle.load(file_obj)
 
-with open('Customer_Churn_Classification/label_encoder_regression.pkl', 'rb') as file_obj:
+with open('label_encoder_regression.pkl', 'rb') as file_obj:
     label_encoder = pickle.load(file_obj)        
 
 #user inputs
